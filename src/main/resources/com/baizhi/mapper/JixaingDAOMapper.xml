@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.JixiangDAO">
+    <resultMap id="jixiangMap" type="com.baizhi.entity.Jixiang">
+        <id property="id" column="fid"/>
+        <result property="name" column="fname"/>
+        <result property="image" column="fimage"/>
+        <result property="author" column="fauthor"/>
+        <result property="broadcasting" column="fbroadcasting"/>
+        <result property="blues" column="fblues"/>
+        <result property="releaseDate" column="freleaseDate"/>
+        <result property="introduction" column="fintroduction"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="tid"/>
+            <result property="name" column="tname"/>
+            <result property="filename" column="tfilename"/>
+            <result property="filesize" column="tfilesize"/>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="jixiangMap">
+            select f.id fid,f.name fname,f.image fimage,f.author fauthor,f.broadcasting fbroadcasting,f.blues fblues,
+            f.releaseDate freleaseDate,f.introduction fintroduction,
+            t.id tid,t.name tname,t.filename tfilename,t.filesize tfilesize,t.jixiang_id tjixiang_id
+            from
+            t_jixiang f
+            inner join t_chapter t
+            on f.id=t.jixiang_id
+            limit #{0},#{1}
+    </select>
+    <select id="queryLength" resultType="Long">
+        select count(*) from t_chapter
+    </select>
+    <select id="queryName" resultType="com.baizhi.entity.Jixiang">
+        select * from  t_jixiang
+    </select>
+    <insert id="save">
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">/*mysql自增序列*/
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_jixiang values(#{id},#{name},#{image},#{author},#{broadcasting},#{blues},#{releaseDate},#{introduction})
+    </insert>
+
+
+    <resultMap id="chapterMap" type="com.baizhi.entity.Jixiang">
+        <id property="id" column="fid"/>
+        <result property="name" column="fname"/>
+        <result property="image" column="fimage"/>
+        <result property="author" column="fauthor"/>
+        <result property="broadcasting" column="fbroadcasting"/>
+        <result property="blues" column="fblues"/>
+        <result property="releaseDate" column="freleaseDate"/>
+        <result property="introduction" column="fintroduction"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="tid"/>
+            <result property="name" column="tname"/>
+            <result property="filename" column="tfilename"/>
+            <result property="filesize" column="tfilesize"/>
+        </collection>
+    </resultMap>
+    <select id="queryChapter" resultMap="chapterMap">
+        select f.id fid,f.name fname,f.image fimage,f.author fauthor,f.broadcasting fbroadcasting,f.blues fblues,
+            f.releaseDate freleaseDate,f.introduction fintroduction,
+            t.id tid,t.name tname,t.filename tfilename,t.filesize tfilesize,t.jixiang_id tjixiang_id
+            from
+            t_jixiang f
+            inner join t_chapter t
+            on f.id=t.jixiang_id where f.id=#{id}
+    </select>
+    <select id="queryOneId" resultType="com.baizhi.entity.Jixiang">
+        select * from t_jixiang where id=#{id}
+    </select>
+</mapper>

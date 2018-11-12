@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ShuffingDAO">
+    <select id="queryAll" resultType="com.baizhi.entity.Shuffing">
+        select * from t_shuffing limit #{0},#{1}
+    </select>
+    <select id="queryOneId" resultType="com.baizhi.entity.Shuffing">
+        select * from t_shuffing where id=#{id}
+    </select>
+    <delete id="remove">
+        delete  from t_shuffing where id=#{id}
+    </delete>
+    <insert id="save">
+       insert into t_shuffing values(#{id},#{image},#{name},#{state},#{releaseDate})
+    </insert>
+    <select id="queryLength" resultType="Long">
+        select count(id) from t_shuffing
+    </select>
+    <update id="update">
+        update t_shuffing set name=#{name},image=#{image},releaseDate=#{releaseDate},state=#{state}
+    </update>
+</mapper>

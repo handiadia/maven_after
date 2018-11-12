@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.WorkrecordDAO">
+    <select id="queryAll" resultType="com.baizhi.entity.Workrecord">
+        select * from t_workrecord limit #{0},#{1}
+    </select>
+    <select id="queryLength" resultType="Long">
+        select count(id) from t_workrecord
+    </select>
+    <insert id="save">
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">/*mysql自增序列*/
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_workrecord(id,workrecord_name) values(#{id},#{workrecord_name})
+    </insert>
+    <delete id="remove">
+        delete from t_workrecord where id=#{id}
+    </delete>
+    <update id="update">
+        update t_workrecord set  workrecord_name=#{workrecord_name}
+    </update>
+    <select id="queryOneId" resultType="com.baizhi.entity.Workrecord">
+        select * from  t_workrecord where id=#{id}
+    </select>
+</mapper>

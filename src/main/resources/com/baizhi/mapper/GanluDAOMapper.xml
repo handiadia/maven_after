@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.GanluDAO">
+    <resultMap id="IntroductionMap" type="com.baizhi.entity.Ganlu">
+        <id property="id" column="gid"/>
+        <result property="name" column="gname"/>
+        <collection property="introductions" ofType="com.baizhi.entity.Introduction">
+            <id property="id" column="iid"/>
+            <result property="name" column="iname"/>
+            <result property="image" column="iimage"/>
+            <result property="releaseDate" column="ireleaseDate"/>
+            <result property="author" column="iauthor"/>
+            <result property="introduction" column="iintroduction"/>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="IntroductionMap">
+        select  g.id gid,g.name gname,
+        i.id iid,i.name iname,i.image iimage,i.releaseDate ireleaseDate,i.author iauthor,i.introduction iintroduction  from t_ganlu g
+        inner  join  t_introduction i
+        on g.id=i.ganlu_id
+        limit #{0},#{1}
+    </select>
+    <select id="queryName" resultType="com.baizhi.entity.Ganlu">
+        select * from t_ganlu
+    </select>
+    <select id="queryLength" resultType="Long">
+        select count(id) from t_introduction
+    </select>
+
+
+</mapper>

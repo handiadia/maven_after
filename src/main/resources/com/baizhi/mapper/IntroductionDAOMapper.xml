@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.IntroductionDAO">
+    <select id="queryOneId" resultType="com.baizhi.entity.Introduction">
+        select * from t_introduction where id=#{id}
+    </select>
+    <delete id="remove">
+        delete from t_introduction where id=#{id}
+    </delete>
+    <insert id="save">
+        insert into t_introduction (id,name,image,releaseDate,author,introduction,ganlu_id)
+        values(#{id},#{name},#{image},#{release},#{author},#{introduction},#{ganlu_id})
+    </insert>
+    <update id="update">
+        update t_introduction set name=#{name},image=#{image},releaseDate=#{releaseDate},author=#{author}
+        introduction=#{introduction}
+    </update>
+</mapper>
